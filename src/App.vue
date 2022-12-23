@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <ys-home></ys-home>
-  </div>
+  <ys-home></ys-home>
 </template>
 
 <script>

@@ -8,24 +8,10 @@
       frameborder="no"
       framespacing="0"
       allowfullscreen="true"
+      autoplay="autoplay"
     >
     </iframe>
-    <!-- <iframe
-      src="//player.bilibili.com/player.html?aid=690138420&bvid=BV1Q24y127zJ&high_quality=1"
-      width="100%"
-      height="700"
-      frameborder="no"
-      scrolling="no"
-      allowfullscreen="allowfullscreen"
-    >
-    </iframe> -->
-
-    <!-- <img src="/assets/xx.gif" /> -->
   </div>
 </template>
 
-<style lang="less" scoped>
-.bilibili-player-danmaku-setting-lite-panel {
-  display: none;
-}
-</style>
+<style lang="less" scoped></style>
