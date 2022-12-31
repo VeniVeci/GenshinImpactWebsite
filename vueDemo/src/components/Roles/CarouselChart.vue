@@ -2,7 +2,7 @@
   <div>
     <el-carousel
       ref="img"
-      :interval="2000"
+      :interval="7000"
       type="card"
       height="400px"
       @change="carouselChange"
@@ -23,14 +23,20 @@ export default {
   data() {
     return {
       pics: ["1.png", "2.png", "3.png", "4.png"],
-      music: ["1.mp3", "2.mp3", "3.mp3", "4.mp3"],
-      musicUrl: "1.mp3",
+      music: [
+        "可莉语音.mp3",
+        "https://uploadstatic.mihoyo.com/ys-obc/2021/09/07/7531033/9fc8c7d2fd6fec2bfa3b9620d513d27e_5871022547932281728.mp3",
+        "3.mp3",
+        "https://uploadstatic.mihoyo.com/ys-obc/2021/02/28/4359827/12195ac5b3e411bb9754b12ebbdc585b_1147430888770623121.mp3",
+      ],
+      musicUrl: "可莉语音.mp3",
     };
   },
   methods: {
     carouselChange(now, prev) {
       console.log(prev + "--->" + now);
-      this.musicUrl = now + 1 + ".mp3";
+      // this.musicUrl = now + 1 + ".mp3";
+      this.musicUrl = this.music[now];
       var audio = document.querySelector("audio");
       audio.play();
     },
