@@ -1,9 +1,33 @@
 <template>
   <div>
-    <!-- width: calc(100% - 10px); height:calc(100vh - 140px); -->
-    <div
-      style="margin-top:0px; width: calc(100% - 10px); height:calc(100vh - 140px);"
-    >
+    <div class="box1">
+      <div style="line-height: 20px;">节点筛选：</div>
+      <el-radio-group
+        v-model="checked_element"
+        size="medium"
+        @change="doFilter"
+      >
+        <el-radio-button label="">全部</el-radio-button>
+        <el-radio-button
+          v-for="thisItem in elements"
+          :key="thisItem"
+          :label="thisItem"
+        />
+      </el-radio-group>
+    </div>
+
+    <div class="box2">
+      <div style="line-height: 20px;">关系筛选：</div>
+      <el-checkbox-group v-model="rel_checkList" @change="doFilter">
+        <el-checkbox
+          v-for="thisItem in all_rel_type"
+          :key="thisItem"
+          :label="thisItem"
+        />
+      </el-checkbox-group>
+    </div>
+
+    <div style="width: calc(100% - 10px);height:calc(100vh - 20px);">
       <SeeksRelationGraph ref="seeksRelationGraph" :options="graphOptions" />
     </div>
   </div>
@@ -11,19 +35,25 @@
 
 <script>
 import SeeksRelationGraph from "relation-graph";
+// import { set } from "vue/types/umd";
 export default {
   name: "SeeksRelationGraphDemo",
   components: { SeeksRelationGraph },
   data() {
     return {
+      elements: ["火", "水", "风", "雷", "草", "冰", "岩"],
+      checked_element: "",
+      rel_checkList: ["师徒", "上下级", "朋友", "监护人", "同门"],
+      all_rel_type: ["师徒", "上下级", "朋友", "监护人", "同门"],
+
       g_loading: true,
       demoname: "---",
       graphOptions: {
         defaultNodeBorderWidth: 0,
-        // defaultNodeColor: "rgba(255, 0, 0, 1)",
+        defaultNodeColor: "rgba(238, 178, 94, 1)",
         allowSwitchLineShape: true,
         allowSwitchJunctionPoint: true,
-        defaultLineShape: 2,
+        defaultLineShape: 1,
         layouts: [
           {
             label: "自动布局",
@@ -36,7 +66,7 @@ export default {
       },
     };
   },
-
+  created() {},
   mounted() {
     this.demoname = this.$route.params.demoname;
     this.setGraphData();
@@ -44,12 +74,14 @@ export default {
   methods: {
     setGraphData() {
       var __graph_json_data = {
+        rootId: "59",
         nodes: [
           {
             id: "1",
             text: "琴",
             color: "#6ed2aa",
             borderColor: "#6ed2aa",
+            data: { elementType: "风" },
             innerHTML:
               '<div class="c-my-node" style="background-image: url(https://uploadstatic.mihoyo.com/contentweb/20220127/2022012718344593599.png);border:#6ed2aa solid 5px;"><div class="c-node-name" style="color:#6ed2aa">琴</div></div>',
           },
@@ -58,6 +90,7 @@ export default {
             text: "安柏",
             color: "#6ed2aa",
             borderColor: "#6ed2aa",
+            data: { elementType: "火" },
             innerHTML:
               '<div class="c-my-node" style="background-image: url(https://uploadstatic.mihoyo.com/contentweb/20220127/2022012718350213870.png);border:#6ed2aa solid 5px;"><div class="c-node-name" style="color:#6ed2aa">安柏</div></div>',
           },
@@ -66,6 +99,7 @@ export default {
             text: "丽莎",
             color: "#6ed2aa",
             borderColor: "#6ed2aa",
+            data: { elementType: "雷" },
             innerHTML:
               '<div class="c-my-node" style="background-image: url(https://uploadstatic.mihoyo.com/contentweb/20200306/2020030617000181697.png);border:#6ed2aa solid 5px;"><div class="c-node-name" style="color:#6ed2aa">丽莎</div></div>',
           },
@@ -74,6 +108,7 @@ export default {
             text: "凯亚",
             color: "#6ed2aa",
             borderColor: "#6ed2aa",
+            data: { elementType: "冰" },
             innerHTML:
               '<div class="c-my-node" style="background-image: url(https://uploadstatic.mihoyo.com/contentweb/20200306/2020030617001674227.png);border:#6ed2aa solid 5px;"><div class="c-node-name" style="color:#6ed2aa">凯亚</div></div>',
           },
@@ -82,6 +117,7 @@ export default {
             text: "芭芭拉",
             color: "#6ed2aa",
             borderColor: "#6ed2aa",
+            data: { elementType: "水" },
             innerHTML:
               '<div class="c-my-node" style="background-image: url(https://uploadstatic.mihoyo.com/contentweb/20200306/2020030617005720579.png);border:#6ed2aa solid 5px;"><div class="c-node-name" style="color:#6ed2aa">芭芭拉</div></div>',
           },
@@ -90,6 +126,7 @@ export default {
             text: "迪卢克",
             color: "#6ed2aa",
             borderColor: "#6ed2aa",
+            data: { elementType: "火" },
             innerHTML:
               '<div class="c-my-node" style="background-image: url(https://uploadstatic.mihoyo.com/contentweb/20200306/2020030617015669833.png);border:#6ed2aa solid 5px;"><div class="c-node-name" style="color:#6ed2aa">迪卢克</div></div>',
           },
@@ -98,6 +135,7 @@ export default {
             text: "雷泽",
             color: "#6ed2aa",
             borderColor: "#6ed2aa",
+            data: { elementType: "雷" },
             innerHTML:
               '<div class="c-my-node" style="background-image: url(https://uploadstatic.mihoyo.com/contentweb/20200306/2020030617025961375.png);border:#6ed2aa solid 5px;"><div class="c-node-name" style="color:#6ed2aa">雷泽</div></div>',
           },
@@ -106,6 +144,7 @@ export default {
             text: "温迪",
             color: "#6ed2aa",
             borderColor: "#6ed2aa",
+            data: { elementType: "风" },
             innerHTML:
               '<div class="c-my-node" style="background-image: url(https://uploadstatic.mihoyo.com/contentweb/20200306/2020030617031747812.png);border:#6ed2aa solid 5px;"><div class="c-node-name" style="color:#6ed2aa">温迪</div></div>',
           },
@@ -114,6 +153,7 @@ export default {
             text: "可莉",
             color: "#6ed2aa",
             borderColor: "#6ed2aa",
+            data: { elementType: "火" },
             innerHTML:
               '<div class="c-my-node" style="background-image: url(https://uploadstatic.mihoyo.com/contentweb/20200306/2020030617033181769.png);border:#6ed2aa solid 5px;"><div class="c-node-name" style="color:#6ed2aa">可莉</div></div>',
           },
@@ -122,6 +162,7 @@ export default {
             text: "班尼特",
             color: "#6ed2aa",
             borderColor: "#6ed2aa",
+            data: { elementType: "火" },
             innerHTML:
               '<div class="c-my-node" style="background-image: url(https://uploadstatic.mihoyo.com/contentweb/20200312/2020031219222320482.png);border:#6ed2aa solid 5px;"><div class="c-node-name" style="color:#6ed2aa">班尼特</div></div>',
           },
@@ -130,6 +171,7 @@ export default {
             text: "诺艾尔",
             color: "#6ed2aa",
             borderColor: "#6ed2aa",
+            data: { elementType: "岩" },
             innerHTML:
               '<div class="c-my-node" style="background-image: url(https://uploadstatic.mihoyo.com/contentweb/20200315/2020031516092797889.png);border:#6ed2aa solid 5px;"><div class="c-node-name" style="color:#6ed2aa">诺艾尔</div></div>',
           },
@@ -138,6 +180,7 @@ export default {
             text: "菲谢尔",
             color: "#6ed2aa",
             borderColor: "#6ed2aa",
+            data: { elementType: "雷" },
             innerHTML:
               '<div class="c-my-node" style="background-image: url(https://uploadstatic.mihoyo.com/contentweb/20200330/2020033019074664412.png);border:#6ed2aa solid 5px;"><div class="c-node-name" style="color:#6ed2aa">菲谢尔</div></div>',
           },
@@ -146,6 +189,7 @@ export default {
             text: "砂糖",
             color: "#6ed2aa",
             borderColor: "#6ed2aa",
+            data: { elementType: "风" },
             innerHTML:
               '<div class="c-my-node" style="background-image: url(https://uploadstatic.mihoyo.com/contentweb/20200724/2020072414340926231.png);border:#6ed2aa solid 5px;"><div class="c-node-name" style="color:#6ed2aa">砂糖</div></div>',
           },
@@ -154,6 +198,7 @@ export default {
             text: "莫娜",
             color: "#6ed2aa",
             borderColor: "#6ed2aa",
+            data: { elementType: "水" },
             innerHTML:
               '<div class="c-my-node" style="background-image: url(https://uploadstatic.mihoyo.com/contentweb/20220127/2022012718352334387.png);border:#6ed2aa solid 5px;"><div class="c-node-name" style="color:#6ed2aa">莫娜</div></div>',
           },
@@ -162,6 +207,7 @@ export default {
             text: "迪奥娜",
             color: "#6ed2aa",
             borderColor: "#6ed2aa",
+            data: { elementType: "冰" },
             innerHTML:
               '<div class="c-my-node" style="background-image: url(https://uploadstatic.mihoyo.com/contentweb/20201106/2020110614164694989.png);border:#6ed2aa solid 5px;"><div class="c-node-name" style="color:#6ed2aa">迪奥娜</div></div>',
           },
@@ -170,6 +216,7 @@ export default {
             text: "阿贝多",
             color: "#6ed2aa",
             borderColor: "#6ed2aa",
+            data: { elementType: "岩" },
             innerHTML:
               '<div class="c-my-node" style="background-image: url(https://uploadstatic.mihoyo.com/contentweb/20201216/2020121617552012082.png);border:#6ed2aa solid 5px;"><div class="c-node-name" style="color:#6ed2aa">阿贝多</div></div>',
           },
@@ -178,6 +225,7 @@ export default {
             text: "罗莎莉亚",
             color: "#6ed2aa",
             borderColor: "#6ed2aa",
+            data: { elementType: "冰" },
             innerHTML:
               '<div class="c-my-node" style="background-image: url(https://uploadstatic.mihoyo.com/contentweb/20220127/2022012718290075546.png);border:#6ed2aa solid 5px;"><div class="c-node-name" style="color:#6ed2aa">罗莎莉亚</div></div>',
           },
@@ -186,6 +234,7 @@ export default {
             text: "优菈",
             color: "#6ed2aa",
             borderColor: "#6ed2aa",
+            data: { elementType: "冰" },
             innerHTML:
               '<div class="c-my-node" style="background-image: url(https://uploadstatic.mihoyo.com/contentweb/20210508/2021050817091079399.png);border:#6ed2aa solid 5px;"><div class="c-node-name" style="color:#6ed2aa">优菈</div></div>',
           },
@@ -194,6 +243,7 @@ export default {
             text: "埃洛伊",
             color: "#6ed2aa",
             borderColor: "#6ed2aa",
+            data: { elementType: "冰" },
             innerHTML:
               '<div class="c-my-node" style="background-image: url(https://uploadstatic.mihoyo.com/contentweb/20210825/2021082511163174110.png);border:#6ed2aa solid 5px;"><div class="c-node-name" style="color:#6ed2aa">埃洛伊</div></div>',
           },
@@ -202,6 +252,7 @@ export default {
             text: "魈",
             color: "#ebb735",
             borderColor: "#ebb735",
+            data: { elementType: "风" },
             innerHTML:
               '<div class="c-my-node" style="background-image: url(https://uploadstatic.mihoyo.com/contentweb/20200306/2020030617035787693.png);border:#ebb735 solid 5px;"><div class="c-node-name" style="color:#ebb735">魈</div></div>',
           },
@@ -210,6 +261,7 @@ export default {
             text: "北斗",
             color: "#ebb735",
             borderColor: "#ebb735",
+            data: { elementType: "雷" },
             innerHTML:
               '<div class="c-my-node" style="background-image: url(https://uploadstatic.mihoyo.com/contentweb/20200306/2020030617043374251.png);border:#ebb735 solid 5px;"><div class="c-node-name" style="color:#ebb735">北斗</div></div>',
           },
@@ -218,6 +270,7 @@ export default {
             text: "凝光",
             color: "#ebb735",
             borderColor: "#ebb735",
+            data: { elementType: "岩" },
             innerHTML:
               '<div class="c-my-node" style="background-image: url(https://uploadstatic.mihoyo.com/contentweb/20200306/2020030617042023125.png);border:#ebb735 solid 5px;"><div class="c-node-name" style="color:#ebb735">凝光</div></div>',
           },
@@ -226,6 +279,7 @@ export default {
             text: "香菱",
             color: "#ebb735",
             borderColor: "#ebb735",
+            data: { elementType: "火" },
             innerHTML:
               '<div class="c-my-node" style="background-image: url(https://uploadstatic.mihoyo.com/contentweb/20200316/2020031618192613355.png);border:#ebb735 solid 5px;"><div class="c-node-name" style="color:#ebb735">香菱</div></div>',
           },
@@ -234,6 +288,7 @@ export default {
             text: "行秋",
             color: "#ebb735",
             borderColor: "#ebb735",
+            data: { elementType: "水" },
             innerHTML:
               '<div class="c-my-node" style="background-image: url(https://uploadstatic.mihoyo.com/contentweb/20200324/2020032419030350146.png);border:#ebb735 solid 5px;"><div class="c-node-name" style="color:#ebb735">行秋</div></div>',
           },
@@ -242,6 +297,7 @@ export default {
             text: "重云",
             color: "#ebb735",
             borderColor: "#ebb735",
+            data: { elementType: "冰" },
             innerHTML:
               '<div class="c-my-node" style="background-image: url(https://uploadstatic.mihoyo.com/contentweb/20200602/2020060218324180299.png);border:#ebb735 solid 5px;"><div class="c-node-name" style="color:#ebb735">重云</div></div>',
           },
@@ -250,6 +306,7 @@ export default {
             text: "刻晴",
             color: "#ebb735",
             borderColor: "#ebb735",
+            data: { elementType: "雷" },
             innerHTML:
               '<div class="c-my-node" style="background-image: url(https://uploadstatic.mihoyo.com/contentweb/20200828/2020082814015644368.png);border:#ebb735 solid 5px;"><div class="c-node-name" style="color:#ebb735">刻晴</div></div>',
           },
@@ -258,6 +315,7 @@ export default {
             text: "七七",
             color: "#ebb735",
             borderColor: "#ebb735",
+            data: { elementType: "冰" },
             innerHTML:
               '<div class="c-my-node" style="background-image: url(https://uploadstatic.mihoyo.com/contentweb/20200828/2020082814265912018.png);border:#ebb735 solid 5px;"><div class="c-node-name" style="color:#ebb735">七七</div></div>',
           },
@@ -266,6 +324,7 @@ export default {
             text: "达达利亚",
             color: "#ebb735",
             borderColor: "#ebb735",
+            data: { elementType: "水" },
             innerHTML:
               '<div class="c-my-node" style="background-image: url(https://uploadstatic.mihoyo.com/contentweb/20201103/2020110314190784136.png);border:#ebb735 solid 5px;"><div class="c-node-name" style="color:#ebb735">达达利亚</div></div>',
           },
@@ -274,6 +333,7 @@ export default {
             text: "钟离",
             color: "#ebb735",
             borderColor: "#ebb735",
+            data: { elementType: "岩" },
             innerHTML:
               '<div class="c-my-node" style="background-image: url(https://uploadstatic.mihoyo.com/contentweb/20201120/2020112010371210769.png);border:#ebb735 solid 5px;"><div class="c-node-name" style="color:#ebb735">钟离</div></div>',
           },
@@ -282,6 +342,7 @@ export default {
             text: "辛焱",
             color: "#ebb735",
             borderColor: "#ebb735",
+            data: { elementType: "火" },
             innerHTML:
               '<div class="c-my-node" style="background-image: url(https://uploadstatic.mihoyo.com/contentweb/20201125/2020112515344362241.png);border:#ebb735 solid 5px;"><div class="c-node-name" style="color:#ebb735">辛焱</div></div>',
           },
@@ -290,6 +351,7 @@ export default {
             text: "甘雨",
             color: "#ebb735",
             borderColor: "#ebb735",
+            data: { elementType: "冰" },
             innerHTML:
               '<div class="c-my-node" style="background-image: url(https://uploadstatic.mihoyo.com/contentweb/20210105/2021010518424084444.png);border:#ebb735 solid 5px;"><div class="c-node-name" style="color:#ebb735">甘雨</div></div>',
           },
@@ -298,6 +360,7 @@ export default {
             text: "胡桃",
             color: "#ebb735",
             borderColor: "#ebb735",
+            data: { elementType: "火" },
             innerHTML:
               '<div class="c-my-node" style="background-image: url(https://uploadstatic.mihoyo.com/contentweb/20210222/2021022210584218038.png);border:#ebb735 solid 5px;"><div class="c-node-name" style="color:#ebb735">胡桃</div></div>',
           },
@@ -306,6 +369,7 @@ export default {
             text: "烟绯",
             color: "#ebb735",
             borderColor: "#ebb735",
+            data: { elementType: "火" },
             innerHTML:
               '<div class="c-my-node" style="background-image: url(https://uploadstatic.mihoyo.com/contentweb/20210420/2021042014093440786.png);border:#ebb735 solid 5px;"><div class="c-node-name" style="color:#ebb735">烟绯</div></div>',
           },
@@ -314,6 +378,7 @@ export default {
             text: "申鹤",
             color: "#ebb735",
             borderColor: "#ebb735",
+            data: { elementType: "冰" },
             innerHTML:
               '<div class="c-my-node" style="background-image: url(https://uploadstatic.mihoyo.com/contentweb/20211221/2021122118121612158.png);border:#ebb735 solid 5px;"><div class="c-node-name" style="color:#ebb735">申鹤</div></div>',
           },
@@ -322,6 +387,7 @@ export default {
             text: "云堇",
             color: "#ebb735",
             borderColor: "#ebb735",
+            data: { elementType: "岩" },
             innerHTML:
               '<div class="c-my-node" style="background-image: url(https://uploadstatic.mihoyo.com/contentweb/20211221/2021122117591771295.png);border:#ebb735 solid 5px;"><div class="c-node-name" style="color:#ebb735">云堇</div></div>',
           },
@@ -330,6 +396,7 @@ export default {
             text: "夜兰",
             color: "#ebb735",
             borderColor: "#ebb735",
+            data: { elementType: "水" },
             innerHTML:
               '<div class="c-my-node" style="background-image: url(https://webstatic.mihoyo.com/upload/contentweb/2022/05/18/76cfc9a21e196fd316070196c1396950_2919759828280177295.png);border:#ebb735 solid 5px;"><div class="c-node-name" style="color:#ebb735">夜兰</div></div>',
           },
@@ -338,6 +405,7 @@ export default {
             text: "神里绫华",
             color: "#be84fc",
             borderColor: "#be84fc",
+            data: { elementType: "冰" },
             innerHTML:
               '<div class="c-my-node" style="background-image: url(https://uploadstatic.mihoyo.com/contentweb/20210720/2021072011085576262.png);border:#be84fc solid 5px;"><div class="c-node-name" style="color:#be84fc">神里绫华</div></div>',
           },
@@ -346,6 +414,7 @@ export default {
             text: "枫原万叶",
             color: "#be84fc",
             borderColor: "#be84fc",
+            data: { elementType: "风" },
             innerHTML:
               '<div class="c-my-node" style="background-image: url(https://uploadstatic.mihoyo.com/contentweb/20210617/2021061716564818668.png);border:#be84fc solid 5px;"><div class="c-node-name" style="color:#be84fc">枫原万叶</div></div>',
           },
@@ -354,6 +423,7 @@ export default {
             text: "宵宫",
             color: "#be84fc",
             borderColor: "#be84fc",
+            data: { elementType: "火" },
             innerHTML:
               '<div class="c-my-node" style="background-image: url(https://uploadstatic.mihoyo.com/contentweb/20210802/2021080210195390130.png);border:#be84fc solid 5px;"><div class="c-node-name" style="color:#be84fc">宵宫</div></div>',
           },
@@ -362,6 +432,7 @@ export default {
             text: "早柚",
             color: "#be84fc",
             borderColor: "#be84fc",
+            data: { elementType: "风" },
             innerHTML:
               '<div class="c-my-node" style="background-image: url(https://uploadstatic.mihoyo.com/contentweb/20210802/2021080211352035312.png);border:#be84fc solid 5px;"><div class="c-node-name" style="color:#be84fc">早柚</div></div>',
           },
@@ -370,6 +441,7 @@ export default {
             text: "雷电将军",
             color: "#be84fc",
             borderColor: "#be84fc",
+            data: { elementType: "雷" },
             innerHTML:
               '<div class="c-my-node" style="background-image: url(https://uploadstatic.mihoyo.com/contentweb/20210817/2021081714114216212.png);border:#be84fc solid 5px;"><div class="c-node-name" style="color:#be84fc">雷电将军</div></div>',
           },
@@ -378,6 +450,7 @@ export default {
             text: "九条裟罗",
             color: "#be84fc",
             borderColor: "#be84fc",
+            data: { elementType: "雷" },
             innerHTML:
               '<div class="c-my-node" style="background-image: url(https://uploadstatic.mihoyo.com/contentweb/20210817/2021081714514765929.png);border:#be84fc solid 5px;"><div class="c-node-name" style="color:#be84fc">九条裟罗</div></div>',
           },
@@ -386,6 +459,7 @@ export default {
             text: "珊瑚宫心海",
             color: "#be84fc",
             borderColor: "#be84fc",
+            data: { elementType: "水" },
             innerHTML:
               '<div class="c-my-node" style="background-image: url(https://uploadstatic.mihoyo.com/contentweb/20210914/2021091414024724995.png);border:#be84fc solid 5px;"><div class="c-node-name" style="color:#be84fc">珊瑚宫心海</div></div>',
           },
@@ -394,6 +468,7 @@ export default {
             text: "托马",
             color: "#be84fc",
             borderColor: "#be84fc",
+            data: { elementType: "火" },
             innerHTML:
               '<div class="c-my-node" style="background-image: url(https://uploadstatic.mihoyo.com/contentweb/20211021/2021102110372681510.png);border:#be84fc solid 5px;"><div class="c-node-name" style="color:#be84fc">托马</div></div>',
           },
@@ -402,6 +477,7 @@ export default {
             text: "荒泷一斗",
             color: "#be84fc",
             borderColor: "#be84fc",
+            data: { elementType: "岩" },
             innerHTML:
               '<div class="c-my-node" style="background-image: url(https://uploadstatic.mihoyo.com/contentweb/20211130/2021113011275394620.png);border:#be84fc solid 5px;"><div class="c-node-name" style="color:#be84fc">荒泷一斗</div></div>',
           },
@@ -410,6 +486,7 @@ export default {
             text: "五郎",
             color: "#be84fc",
             borderColor: "#be84fc",
+            data: { elementType: "岩" },
             innerHTML:
               '<div class="c-my-node" style="background-image: url(https://uploadstatic.mihoyo.com/contentweb/20211130/2021113011485830826.png);border:#be84fc solid 5px;"><div class="c-node-name" style="color:#be84fc">五郎</div></div>',
           },
@@ -418,6 +495,7 @@ export default {
             text: "八重神子",
             color: "#be84fc",
             borderColor: "#be84fc",
+            data: { elementType: "雷" },
             innerHTML:
               '<div class="c-my-node" style="background-image: url(https://uploadstatic.mihoyo.com/contentweb/20220208/2022020813481182336.png);border:#be84fc solid 5px;"><div class="c-node-name" style="color:#be84fc">八重神子</div></div>',
           },
@@ -426,6 +504,7 @@ export default {
             text: "神里绫人",
             color: "#be84fc",
             borderColor: "#be84fc",
+            data: { elementType: "水" },
             innerHTML:
               '<div class="c-my-node" style="background-image: url(https://webstatic.mihoyo.com/upload/contentweb/2022/03/14/6713b70c875d723eb22c9effda407377_2979852309102536594.png);border:#be84fc solid 5px;"><div class="c-node-name" style="color:#be84fc">神里绫人</div></div>',
           },
@@ -434,6 +513,7 @@ export default {
             text: "久岐忍",
             color: "#be84fc",
             borderColor: "#be84fc",
+            data: { elementType: "雷" },
             innerHTML:
               '<div class="c-my-node" style="background-image: url(https://webstatic.mihoyo.com/upload/contentweb/2022/06/15/d9e1610f9201fd4d5e8ca93c21380485_2031480174215672233.png);border:#be84fc solid 5px;"><div class="c-node-name" style="color:#be84fc">久岐忍</div></div>',
           },
@@ -442,6 +522,7 @@ export default {
             text: "鹿野院平藏",
             color: "#be84fc",
             borderColor: "#be84fc",
+            data: { elementType: "风" },
             innerHTML:
               '<div class="c-my-node" style="background-image: url(https://webstatic.mihoyo.com/upload/contentweb/2022/07/07/8cb39b11a39045288b7ef800b9c8a085_4905643200701802462.png);border:#be84fc solid 5px;"><div class="c-node-name" style="color:#be84fc">鹿野院平藏</div></div>',
           },
@@ -450,6 +531,7 @@ export default {
             text: "提纳里",
             color: "#5a9216",
             borderColor: "#5a9216",
+            data: { elementType: "草" },
             innerHTML:
               '<div class="c-my-node" style="background-image: url(https://webstatic.mihoyo.com/upload/contentweb/2022/08/15/1f88bdae2e99307e68a0bbfedf6cc74f_2882938237707913291.png);border:#5a9216 solid 5px;"><div class="c-node-name" style="color:#5a9216">提纳里</div></div>',
           },
@@ -458,6 +540,7 @@ export default {
             text: "柯莱",
             color: "#5a9216",
             borderColor: "#5a9216",
+            data: { elementType: "草" },
             innerHTML:
               '<div class="c-my-node" style="background-image: url(https://webstatic.mihoyo.com/upload/contentweb/2022/08/15/3677cbc063b7ab3887ceb7f9a77287ac_1039229097287658400.png);border:#5a9216 solid 5px;"><div class="c-node-name" style="color:#5a9216">柯莱</div></div>',
           },
@@ -466,6 +549,7 @@ export default {
             text: "多莉",
             color: "#5a9216",
             borderColor: "#5a9216",
+            data: { elementType: "雷" },
             innerHTML:
               '<div class="c-my-node" style="background-image: url(https://webstatic.mihoyo.com/upload/contentweb/2022/08/29/b8a367991017a9f3c6bb445c5c8b68e6_1191967378101363412.png);border:#5a9216 solid 5px;"><div class="c-node-name" style="color:#5a9216">多莉</div></div>',
           },
@@ -474,6 +558,7 @@ export default {
             text: "赛诺",
             color: "#5a9216",
             borderColor: "#5a9216",
+            data: { elementType: "雷" },
             innerHTML:
               '<div class="c-my-node" style="background-image: url(https://webstatic.mihoyo.com/upload/contentweb/2022/09/21/377cfb0cf754a873c864e92208e540f0_2617971490404602601.png);border:#5a9216 solid 5px;"><div class="c-node-name" style="color:#5a9216">赛诺</div></div>',
           },
@@ -482,6 +567,7 @@ export default {
             text: "坎蒂丝",
             color: "#5a9216",
             borderColor: "#5a9216",
+            data: { elementType: "水" },
             innerHTML:
               '<div class="c-my-node" style="background-image: url(https://webstatic.mihoyo.com/upload/contentweb/2022/09/22/4199ac7c190fe49d64215345c1c04f30_767621913108456368.png);border:#5a9216 solid 5px;"><div class="c-node-name" style="color:#5a9216">坎蒂丝</div></div>',
           },
@@ -490,6 +576,7 @@ export default {
             text: "妮露",
             color: "#5a9216",
             borderColor: "#5a9216",
+            data: { elementType: "水" },
             innerHTML:
               '<div class="c-my-node" style="background-image: url(https://webstatic.mihoyo.com/upload/contentweb/2022/09/27/a5f2a564298709911b3ceef0289d183c_1572553848866085675.png);border:#5a9216 solid 5px;"><div class="c-node-name" style="color:#5a9216">妮露</div></div>',
           },
@@ -498,6 +585,7 @@ export default {
             text: "纳西妲",
             color: "#5a9216",
             borderColor: "#5a9216",
+            data: { elementType: "草" },
             innerHTML:
               '<div class="c-my-node" style="background-image: url(https://webstatic.mihoyo.com/upload/contentweb/2022/10/20/62cb7fb1815d9d05d3ece2e0d8e85c7d_8731082942818264376.png);border:#5a9216 solid 5px;"><div class="c-node-name" style="color:#5a9216">纳西妲</div></div>',
           },
@@ -506,6 +594,7 @@ export default {
             text: "莱依拉",
             color: "#5a9216",
             borderColor: "#5a9216",
+            data: { elementType: "冰" },
             innerHTML:
               '<div class="c-my-node" style="background-image: url(https://webstatic.mihoyo.com/upload/contentweb/2022/10/20/f5b95c8f39180f0bf83303c6316439c4_2737625808068154153.png);border:#5a9216 solid 5px;"><div class="c-node-name" style="color:#5a9216">莱依拉</div></div>',
           },
@@ -514,12 +603,15 @@ export default {
             text: "旅行者",
             color: "#FF0000",
             borderColor: "#FF0000",
+            data: { elementType: "All" },
             innerHTML:
-              '<div class="c-my-node" style="background-image: url(https://s1.ax1x.com/2022/11/27/zUNsYT.png);border:#ff0000 solid 10px;"><div class="c-node-name" style="color:#ff875e"></div></div>',
+              '<div class="c-travler-node" "><div class="c-node-name" >旅行者</div></div>',
           },
         ],
+        // innerHTML:
+        //       '<div class="c-travler-node" "><div class="c-node-name" style="color:#FF0000">旅行者</div></div>',
         links: [
-          { from: "1", to: "2", text: "上下级" },
+          { from: "1", to: "2", text: "上下级" }, //https://s1.ax1x.com/2022/11/27/zUNsYT.png
           { from: "1", to: "3", text: "同事" },
           { from: "1", to: "4", text: "同事" },
           { from: "1", to: "5", text: "姐妹" },
@@ -628,26 +720,73 @@ export default {
         }
       );
     },
-    onNodeClick(nodeObject, $event) {
-      console.log("onNodeClick:", nodeObject);
-    },
-    onLineClick(lineObject, $event) {
-      console.log("onLineClick:", lineObject);
+    doFilter() {
+      const _all_nodes = this.$refs.seeksRelationGraph.getNodes();
+      const _all_links = this.$refs.seeksRelationGraph.getLines();
+
+      // console.log(_all_nodes);
+      // console.log(_all_links);
+      // console.log(this.rel_checkList);
+      let checkList = new Set(this.rel_checkList);
+      // console.log(checkList);
+
+      // console.log(_all_nodes[1]);
+      // console.log(this.checked_element);
+      _all_nodes.forEach((thisNode) => {
+        let _isHideThisLine = false;
+        if (this.checked_element !== "") {
+          // 如果节点的元素属性是等于当前筛选条件的话  那么当前节点就不应该隐藏 否则如果不相等的话 就应该隐藏
+          if (thisNode.data["elementType"] !== this.checked_element) {
+            _isHideThisLine = true;
+          }
+        }
+        thisNode.opacity =
+          _isHideThisLine && thisNode.data["elementType"] !== "All" ? 0.1 : 1;
+      });
+      // this.$refs.seeksRelationGraph.refresh();
+      // console.log(thisLine);
+      // rel_checkList 存在 当前line 的关系类型
+      // if (this.rel_checkList.indexOf(thisLine.data["type"]) === -1) {
+      // if (this.rel_checkList.indexOf(thisLine.text) === -1) {
+      //   if (!thisLine.isHide) {
+      //     // 如果当前的关系是 显现的 那么就隐藏
+      //     thisLine.isHide = true;
+      //     // console.log("Hide line:", thisLine);
+      //   }
+      // }
+      // // rel_checkList 不存在 当前line 的关系类型
+      // else {
+      //   if (thisLine.isHide) {
+      //     // 如果当前的关系是 隐藏的 那么就显现
+      //     thisLine.isHide = false;
+      //     // console.log("Show line:", thisLine);
+      //   }
+      // }
+      _all_links.forEach((thisLink) => {
+        thisLink.relations.forEach((thisLine) => {
+          // console.log(thisLine.text);
+          if (checkList.has(thisLine.text)) {
+            thisLine.isHide = false;
+          } else {
+            thisLine.isHide = true;
+          }
+        });
+        // thisNode.opacity = _isShowThisNode ? 1 : 0.1;
+      });
+      // this.$refs.seeksRelationGraph.dataUpdated();
     },
   },
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style>
 .c-my-node {
   background-position: center center;
   background-size: 100%;
   border: #ff8c00 solid 2px;
-  /* height: 80px;
-    width: 80px; */
-  height: 40px;
-  width: 40px;
+  height: 80px;
+  width: 80px;
   border-radius: 40px;
 }
 .c-node-name {
@@ -655,5 +794,26 @@ export default {
   margin-left: -40px;
   text-align: center;
   margin-top: 85px;
+}
+.c-travler-node {
+  background-position: center center;
+  background-size: 100%;
+  border: #ff8c00 solid 2px;
+  height: 80px;
+  width: 80px;
+  border-radius: 40px;
+  border: #d8f023 solid 2px;
+  background-image: url(../../assets/images/kong.png);
+}
+
+.box1 {
+  float: left;
+  margin-right: 30px;
+}
+.box2 {
+  float: left;
+}
+.el-checkbox-group {
+  margin-top: 8px;
 }
 </style>
