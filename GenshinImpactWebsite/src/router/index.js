@@ -5,6 +5,8 @@ import CarouselChart from "../components/Roles/CarouselChart";
 import RelationGraph from "../components/Roles/RelationGraph";
 import Mondstadt from "../components/Landscape/Mondstadt";
 import Liyue from "../components/Landscape/Liyue";
+import Inazuma from "../components/Landscape/Inazuma";
+import Sumeru from "../components/Landscape/Sumeru";
 import zhongli from "../components/Videos/zhongli";
 import yrzhong from "../components/Videos/yrzhong";
 import snpg from "../components/Videos/snpg";
@@ -27,6 +29,14 @@ const router = new VueRouter({
     {
       path: "/liyue",
       component: Liyue,
+    },
+    {
+      path: "/inazuma",
+      component: Inazuma,
+    },
+    {
+      path: "/sumeru",
+      component: Sumeru,
     },
     {
       path: "/zhongli",

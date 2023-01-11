@@ -45,12 +45,12 @@
               <i class="el-icon-circle-check"></i>璃月</template
             >
           </el-menu-item>
-          <el-menu-item index="1-4-1">
+          <el-menu-item index="/inazuma">
             <template slot="title">
               <i class="el-icon-circle-check"></i>稻妻</template
             >
           </el-menu-item>
-          <el-menu-item index="1-4-1">
+          <el-menu-item index="/sumeru">
             <template slot="title">
               <i class="el-icon-circle-check"></i>须弥</template
             >
