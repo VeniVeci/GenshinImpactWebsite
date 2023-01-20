@@ -19,40 +19,40 @@
           </template>
           <el-menu-item index="/relationGraph">
             <template slot="title">
-              <i class="el-icon-user"></i>人物关系图谱</template
+              <i class="el-icon-s-check"></i>人物关系图谱</template
             >
           </el-menu-item>
 
           <el-menu-item index="/CarouselChart">
             <template slot="title">
-              <i class="el-icon-circle-check"></i>走马灯</template
+              <i class="el-icon-s-grid"></i>走马灯</template
             >
           </el-menu-item>
         </el-submenu>
 
         <el-submenu index="2">
           <template slot="title">
-            <i class="el-icon-video-camera-solid"></i>
+            <i class="el-icon-camera-solid"></i>
             <span>观景点</span></template
           >
           <el-menu-item index="/mondstadt">
             <template slot="title">
-              <i class="el-icon-circle-check"></i>蒙德</template
+              <i class="el-icon-picture"></i>蒙德</template
             >
           </el-menu-item>
           <el-menu-item index="/liyue">
             <template slot="title">
-              <i class="el-icon-circle-check"></i>璃月</template
+              <i class="el-icon-picture"></i>璃月</template
             >
           </el-menu-item>
           <el-menu-item index="/inazuma">
             <template slot="title">
-              <i class="el-icon-circle-check"></i>稻妻</template
+              <i class="el-icon-picture"></i>稻妻</template
             >
           </el-menu-item>
           <el-menu-item index="/sumeru">
             <template slot="title">
-              <i class="el-icon-circle-check"></i>须弥</template
+              <i class="el-icon-picture"></i>须弥</template
             >
           </el-menu-item>
         </el-submenu>
@@ -64,29 +64,29 @@
           >
           <el-menu-item index="/zhongli">
             <template slot="title">
-              <i class="el-icon-circle-check"></i>钟离</template
+              <i class="el-icon-caret-right"></i>钟离</template
             >
           </el-menu-item>
-          <el-menu-item index="/yrzhong">
+          <el-menu-item index="/yuanmo">
             <template slot="title">
-              <i class="el-icon-circle-check"></i>愚人众</template
+              <i class="el-icon-caret-right"></i>原魔</template
             >
           </el-menu-item>
           <el-menu-item index="/snpg">
             <template slot="title">
-              <i class="el-icon-circle-check"></i>神女劈观</template
+              <i class="el-icon-caret-right"></i>神女劈观</template
             >
           </el-menu-item>
           <el-menu-item index="/klee">
             <template slot="title">
-              <i class="el-icon-circle-check"></i>kleeeeeee</template
+              <i class="el-icon-caret-right"></i>可莉</template
             >
           </el-menu-item>
         </el-submenu>
 
         <el-submenu index="/website">
           <template slot="title" index="/website">
-            <i class="el-icon-video-camera-solid"></i>
+            <i class="el-icon-s-home"></i>
             <span>相关网站</span></template
           >
         </el-submenu>
@@ -101,15 +101,11 @@
 </template>
 
 <script>
-import MovePic from "./Roles/CarouselChart.vue";
 export default {
   data() {
     return {
       isCollapse: false,
     };
-  },
-  components: {
-    MovePic,
   },
   methods: {
     toggleCollapse() {

@@ -8,12 +8,18 @@ import Liyue from "../components/Landscape/Liyue";
 import Inazuma from "../components/Landscape/Inazuma";
 import Sumeru from "../components/Landscape/Sumeru";
 import zhongli from "../components/Videos/zhongli";
-import yrzhong from "../components/Videos/yrzhong";
+import yuanmo from "../components/Videos/yuanmo";
 import snpg from "../components/Videos/snpg";
+import klee from "../components/Videos/klee";
 
+import Main from "../components/Main";
 //创建并暴露一个路由器
 const router = new VueRouter({
   routes: [
+    {
+      path: "/",
+      component: Main,
+    },
     {
       path: "/CarouselChart",
       component: CarouselChart,
@@ -43,12 +49,16 @@ const router = new VueRouter({
       component: zhongli,
     },
     {
-      path: "/yrzhong",
-      component: yrzhong,
+      path: "/yuanmo",
+      component: yuanmo,
     },
     {
       path: "/snpg",
       component: snpg,
+    },
+    {
+      path: "/klee",
+      component: klee,
     },
   ],
 });

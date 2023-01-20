@@ -1,7 +1,7 @@
 <template>
   <div>
     <iframe
-      src="//player.bilibili.com/player.html?aid=712909579&bvid=BV1hD4y1X7Rm&cid=330929291&page=1&high_quality=1"
+      src="//player.bilibili.com/player.html?aid=712442651&bvid=BV18D4y1d7Uz&cid=246302747&page=1&high_quality=1"
       scrolling="no"
       width="100%"
       height="700"
