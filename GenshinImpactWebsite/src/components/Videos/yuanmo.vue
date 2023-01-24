@@ -1,11 +1,6 @@
 <template>
   <div>
-    <el-carousel
-      :interval="3000"
-      type="card"
-      height="400px"
-      @change="carouselChange"
-    >
+    <el-carousel :interval="3000" height="400px" @change="carouselChange">
       <el-carousel-item v-for="item in videos" :key="item">
         <div>
           <iframe

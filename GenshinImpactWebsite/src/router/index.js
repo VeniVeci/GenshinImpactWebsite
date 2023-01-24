@@ -16,10 +16,10 @@ import Main from "../components/Main";
 //创建并暴露一个路由器
 const router = new VueRouter({
   routes: [
-    {
-      path: "/",
-      component: Main,
-    },
+    // {
+    //   path: "/",
+    //   component: Main,
+    // },
     {
       path: "/CarouselChart",
       component: CarouselChart,
